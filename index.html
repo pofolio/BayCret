@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파도 애니메이션</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background: #03151f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .content-wrapper {
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #container {
+            width: 100%;
+            height: 80vh;
+            min-height: 300px;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px #000;
+            background: linear-gradient(#f9855d, #fdd288, white);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wave {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            left: -25%;
+            background-color: rgba(0, 190, 255, 0.4);
+            border-radius: 45%;
+            animation: rotate 10s linear infinite;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wave-01 { 
+            top: 60%; 
+            animation-duration: 15s;
+            border-radius: 43%;
+        }
+        .wave-02 { 
+            top: 65%; 
+            background-color: rgba(0, 70, 110, 0.4);
+            animation-duration: 12s;
+            border-radius: 47%;
+        }
+        .wave-03 { 
+            top: 70%; 
+            background-color: rgba(0, 90, 110, 0.4);
+            animation-duration: 10s;
+            border-radius: 41%;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.02);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
+        }
+
+        .message-form {
+            width: 100%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            background: white;
+        }
+
+        .message-input:focus {
+            border-color: #45a049;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .message {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: clamp(18px, 3vw, 32px);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .message.visible {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                padding: 10px;
+            }
+
+            #container {
+                height: 80vh;
+            }
+
+            .message-form {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #container {
+                height: 80vh;
+            }
+
+            .message-input {
+                padding: 10px;
+            }
+
+            button {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <div id="container">
+            <div class="wave wave-01"></div>
+            <div class="wave wave-02"></div>
+            <div class="wave wave-03"></div>
+            <div class="message"></div>
+            <form class="message-form" onsubmit="handleSubmit(event)">
+                <input type="text" class="message-input" placeholder="메시지를 입력하세요" required>
+                <button type="submit">전송</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let isHigh = false;
+        const waves = document.querySelectorAll('.wave');
+        const originalPositions = ['60%', '65%', '70%'];
+        const highPositions = ['45%', '50%', '55%'];
+        const messageElement = document.querySelector('.message');
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const input = event.target.querySelector('.message-input');
+            const message = input.value;
+            
+            if (message.trim()) {
+                showMessage(message);
+                input.value = '';
+            }
+        }
+
+        function showMessage(message) {
+            messageElement.textContent = message;
+            messageElement.classList.add('visible');
+            
+            // 파도가 올라가서 메시지를 삼키는 애니메이션
+            waves.forEach((wave, index) => {
+                wave.style.top = highPositions[index];
+                wave.style.transform = `rotate(${Math.random() * 360}deg) scale(1.1)`;
+            });
+
+            // 2초 후에 파도가 내려가고 메시지가 사라짐
+            setTimeout(() => {
+                waves.forEach((wave, index) => {
+                    wave.style.top = originalPositions[index];
+                    wave.style.transform = `rotate(${Math.random() * 360}deg) scale(1)`;
+                });
+                messageElement.classList.remove('visible');
+            }, 2000);
+        }
+    </script>
+</body>
+</html> 
