@@ -49,44 +49,54 @@
             flex-direction: column;
         }
 
-        .wave {
+        .wave-container {
             position: absolute;
-            width: 150%;
-            height: 150%;
-            left: -25%;
-            background-color: rgba(0, 190, 255, 0.4);
-            border-radius: 45%;
-            animation: rotate 10s linear infinite;
-            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            bottom: 60%;
+            left: 0;
+            transform: rotate(180deg);
+            transform-origin: center center;
+            width: 100%;
+            height: 100%;
+            transition: bottom 3s ease-in-out;
+            z-index: 10;
         }
 
-        .wave-01 { 
-            top: 60%; 
-            animation-duration: 15s;
-            border-radius: 43%;
-        }
-        .wave-02 { 
-            top: 65%; 
-            background-color: rgba(0, 70, 110, 0.4);
-            animation-duration: 12s;
-            border-radius: 47%;
-        }
-        .wave-03 { 
-            top: 70%; 
-            background-color: rgba(0, 90, 110, 0.4);
-            animation-duration: 10s;
-            border-radius: 41%;
+        .wave-container.move {
+            bottom: 30%;
         }
 
-        @keyframes rotate {
+        .editorial {
+            display: block;
+            width: 100%;
+            height: 10em;
+            max-height: 100vh;
+            margin: 0;
+        }
+
+        .parallax>use {
+            animation: move-forever 12s linear infinite;
+        }
+
+        .parallax>use:nth-child(1) {
+            animation-delay: -2s;
+        }
+
+        .parallax>use:nth-child(2) {
+            animation-delay: -2s;
+            animation-duration: 5s;
+        }
+
+        .parallax>use:nth-child(3) {
+            animation-delay: -4s;
+            animation-duration: 3s;
+        }
+
+        @keyframes move-forever {
             0% {
-                transform: rotate(0deg) scale(1);
-            }
-            50% {
-                transform: rotate(180deg) scale(1.02);
+                transform: translate(-90px, 0%);
             }
             100% {
-                transform: rotate(360deg) scale(1);
+                transform: translate(85px, 0%);
             }
         }
 
@@ -98,7 +108,7 @@
             display: flex;
             gap: 10px;
             position: relative;
-            z-index: 2;
+            z-index: 12;
         }
 
         .message-input {
@@ -109,6 +119,7 @@
             font-size: 16px;
             outline: none;
             background: white;
+            z-index: 12;
         }
 
         .message-input:focus {
@@ -133,7 +144,7 @@
 
         .message {
             position: absolute;
-            top: 65%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
@@ -183,14 +194,56 @@
                 padding: 10px 20px;
             }
         }
+
+        .content {
+            font-family: 'Lato', sans-serif;
+            text-align: center;
+            background-color: #4579e2;
+            min-height: 75vh;
+            margin: -.1em 0 0 0;
+            padding: 1em;
+            color: #eee;
+            font-size: 2em;
+            font-weight: 300;
+        }
+
+        .content h1 {
+            margin-top: -1.3em;
+            font-weight: 100;
+            font-size: 5em;
+            user-select: none;
+            cursor: default;
+        }
+
+        @media (max-width:50em) {
+            .content h1 {
+                font-size: 12vmax;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="content-wrapper">
         <div id="container">
-            <div class="wave wave-01"></div>
-            <div class="wave wave-02"></div>
-            <div class="wave wave-03"></div>
+            <div class="wave-container">
+                <svg class="editorial" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 24 150 28" preserveAspectRatio="none">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 
+                            58-18 88-18s
+                            58 18 88 18 
+                            58-18 88-18 
+                            58 18 88 18
+                            v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="50" y="0" fill="#2d55aa" />
+                        <use xlink:href="#gentle-wave" x="50" y="3" fill="#3461c1" />
+                        <use xlink:href="#gentle-wave" x="50" y="6" fill="#4579e2" />
+                    </g>
+                </svg>
+                <div class="content"></div>
+            </div>
             <div class="message"></div>
             <form class="message-form" onsubmit="handleSubmit(event)">
                 <input type="text" class="message-input" placeholder="메시지를 입력하세요" required>
@@ -200,11 +253,9 @@
     </div>
 
     <script>
-        let isHigh = false;
-        const waves = document.querySelectorAll('.wave');
-        const originalPositions = ['60%', '65%', '70%'];
-        const highPositions = ['45%', '50%', '55%'];
+        const waveContainer = document.querySelector('.wave-container');
         const messageElement = document.querySelector('.message');
+        let isMoving = false;
 
         function handleSubmit(event) {
             event.preventDefault();
@@ -221,20 +272,18 @@
             messageElement.textContent = message;
             messageElement.classList.add('visible');
             
-            // 파도가 올라가서 메시지를 삼키는 애니메이션
-            waves.forEach((wave, index) => {
-                wave.style.top = highPositions[index];
-                wave.style.transform = `rotate(${Math.random() * 360}deg) scale(1.1)`;
-            });
-
-            // 2초 후에 파도가 내려가고 메시지가 사라짐
-            setTimeout(() => {
-                waves.forEach((wave, index) => {
-                    wave.style.top = originalPositions[index];
-                    wave.style.transform = `rotate(${Math.random() * 360}deg) scale(1)`;
-                });
-                messageElement.classList.remove('visible');
-            }, 2000);
+            if (!isMoving) {
+                isMoving = true;
+                waveContainer.classList.add('move');
+                
+                setTimeout(() => {
+                    waveContainer.classList.remove('move');
+                    setTimeout(() => {
+                        isMoving = false;
+                    }, 3000);
+                    messageElement.classList.remove('visible');
+                }, 3000);
+            }
         }
     </script>
 </body>
