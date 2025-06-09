@@ -18,8 +18,8 @@ const mockData = {
         "모든 감정은 의미가 있어요"
     ],
 
-    // 인기 파도들
-    popularWaves: [
+    // 인기 편지병들
+    popularBottles: [
         {
             title: "오늘 하루도 고생했어요",
             preview: "혼자서도 잘 견뎌내고 있는 당신이 대단해요. 내일은 분명 더 나은 하루가...",
@@ -68,14 +68,14 @@ const mockData = {
     userStats: {
         quote: "당신은 오늘 '위로'를 가장 많이 담았어요",
         stats: [
-            { label: '보낸 파도', value: '23개' },
+            { label: '보낸 편지병', value: '23개' },
             { label: '받은 공감', value: '156개' },
             { label: '나눈 위로', value: '42개' }
         ]
     },
 
-    // 내가 보낸 파도들
-    myWaves: [
+    // 내가 보낸 편지병들
+    myBottles: [
         {
             title: "오늘의 작은 행복",
             preview: "커피 향이 유독 좋았던 오후...",
@@ -138,23 +138,23 @@ function renderDailyQuote() {
     }
 }
 
-function renderPopularWaves() {
+function renderPopularBottles() {
     const container = document.querySelector('#main-screen .popular-waves');
     if (!container) return;
     
     const title = container.querySelector('h3');
-    const waveCards = mockData.popularWaves.map(wave => `
+    const bottleCards = mockData.popularBottles.map(bottle => `
         <div class="wave-card">
-            <div class="title">${wave.title}</div>
-            <div class="preview">${wave.preview}</div>
+            <div class="title">${bottle.title}</div>
+            <div class="preview">${bottle.preview}</div>
             <div class="stats">
-                <span>💙 ${wave.likes}개의 공감</span>
-                <span>💬 ${wave.comments}개의 댓글</span>
+                <span>💙 ${bottle.likes}개의 공감</span>
+                <span>💬 ${bottle.comments}개의 댓글</span>
             </div>
         </div>
     `).join('');
     
-    container.innerHTML = title.outerHTML + waveCards;
+    container.innerHTML = title.outerHTML + bottleCards;
 }
 
 function renderRandomCard() {
@@ -190,23 +190,23 @@ function renderUserStats() {
     }
 }
 
-function renderMyWaves() {
+function renderMyBottles() {
     const container = document.querySelector('#profile-screen .popular-waves:last-child');
     if (!container) return;
     
     const title = container.querySelector('h3');
-    const waveCards = mockData.myWaves.map(wave => `
+    const bottleCards = mockData.myBottles.map(bottle => `
         <div class="wave-card">
-            <div class="title">${wave.title}</div>
-            <div class="preview">${wave.preview}</div>
+            <div class="title">${bottle.title}</div>
+            <div class="preview">${bottle.preview}</div>
             <div class="stats">
-                <span>💙 ${wave.likes}개의 공감</span>
-                <span>${wave.time}</span>
+                <span>💙 ${bottle.likes}개의 공감</span>
+                <span>${bottle.time}</span>
             </div>
         </div>
     `).join('');
     
-    container.innerHTML = title.outerHTML + waveCards;
+    container.innerHTML = title.outerHTML + bottleCards;
 }
 
 function renderFlowSteps() {
@@ -228,10 +228,10 @@ function renderFlowSteps() {
 document.addEventListener('DOMContentLoaded', function() {
     renderEmotionRadar();
     renderDailyQuote();
-    renderPopularWaves();
+    renderPopularBottles();
     renderRandomCard();
     renderUserStats();
-    renderMyWaves();
+    renderMyBottles();
     renderFlowSteps();
     
     // 기존 이벤트 리스너들 재등록
@@ -261,7 +261,7 @@ function attachEventListeners() {
     // 액션 버튼 클릭 효과
     document.querySelectorAll('.action-btn').forEach(btn => {
         btn.addEventListener('click', function () {
-            if (this.textContent.includes('다른 파도')) {
+            if (this.textContent.includes('다른 편지병')) {
                 renderRandomCard();
             }
         });

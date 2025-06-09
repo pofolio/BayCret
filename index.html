@@ -9,18 +9,32 @@
 </head>
 
 <body>
+    <!-- 스플래시 화면 -->
+    <div class="splash-screen" id="splash-screen">
+        <div class="splash-content">
+            <div class="bottle-logo">🍶</div>
+            <h1 class="splash-title">BayCret</h1>
+            <p class="splash-subtitle">바다에 담은 비밀 이야기</p>
+            <div class="loading-waves">
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="wave-bg"></div>
 
         <!-- 메인 화면 -->
         <div class="screen active" id="main-screen">
             <div class="header">
-                <h1>🌊 바다의 속삭임</h1>
-                <div class="subtitle">감정을 나누는 익명 커뮤니티</div>
+                <h1>🍶 BayCret</h1>
+                <div class="subtitle">바다에 담은 비밀 편지들</div>
             </div>
 
             <div class="greeting">
-                오늘 바다엔 어떤 감정이 흐를까요?
+                오늘은 어떤 편지를 바다에 띄워볼까요?
             </div>
 
             <div class="emotion-radar">
@@ -33,7 +47,7 @@
             </div>
 
             <div class="popular-waves">
-                <h3>🌊 인기 파도들</h3>
+                <h3>🍶 인기 편지병들</h3>
                 <!-- 동적으로 생성됨 -->
             </div>
         </div>
@@ -41,7 +55,7 @@
         <!-- 글쓰기 화면 -->
         <div class="screen" id="write-screen">
             <div class="write-header">
-                <h2>📝 당신의 파도를 기록해보세요</h2>
+                <h2>🍶 편지를 병에 담아보세요</h2>
             </div>
 
             <div class="emotion-selector">
@@ -65,14 +79,14 @@
                 익명으로 게시하기
             </label>
 
-            <button class="primary-btn">🌊 파도 보내기</button>
+            <button class="primary-btn">🍶 편지병 바다에 띄우기</button>
         </div>
 
         <!-- 탐색 화면 -->
         <div class="screen" id="explore-screen">
             <div class="header">
-                <h2>🔍 파도 줍기</h2>
-                <div class="subtitle">다른 사람들의 감정을 만나보세요</div>
+                <h2>🍶 편지병 줍기</h2>
+                <div class="subtitle">바다에서 떠내려온 편지들을 읽어보세요</div>
             </div>
 
             <div class="random-card">
@@ -82,15 +96,15 @@
             <div class="action-buttons">
                 <button class="action-btn">💙 공감하기</button>
                 <button class="action-btn">💬 위로하기</button>
-                <button class="action-btn">🔄 다른 파도</button>
+                <button class="action-btn">🔄 다른 편지병</button>
             </div>
         </div>
 
         <!-- 마이페이지 -->
         <div class="screen" id="profile-screen">
             <div class="header">
-                <h2>🏝️ 나만의 조용한 섬</h2>
-                <div class="subtitle">당신의 감정 여행 기록</div>
+                <h2>🏝️ 나만의 편지 보관함</h2>
+                <div class="subtitle">당신이 보낸 편지병들의 기록</div>
             </div>
 
             <div class="daily-quote">
@@ -105,7 +119,7 @@
             </div>
 
             <div class="popular-waves">
-                <h3>🌟 내가 보낸 파도들</h3>
+                <h3>🍶 내가 보낸 편지병들</h3>
                 <!-- 동적으로 생성됨 -->
             </div>
         </div>
@@ -123,20 +137,20 @@
         <!-- 하단 네비게이션 -->
         <div class="bottom-nav">
             <button class="nav-btn active" onclick="showScreen('main-screen', this)">
-                <div class="nav-icon">🌊</div>
+                <div class="nav-icon">🍶</div>
                 <div>홈</div>
             </button>
             <button class="nav-btn" onclick="showScreen('write-screen', this)">
                 <div class="nav-icon">✍️</div>
-                <div>파도 보내기</div>
+                <div>편지 쓰기</div>
             </button>
             <button class="nav-btn" onclick="showScreen('explore-screen', this)">
                 <div class="nav-icon">🔍</div>
-                <div>파도 줍기</div>
+                <div>편지 줍기</div>
             </button>
             <button class="nav-btn" onclick="showScreen('profile-screen', this)">
                 <div class="nav-icon">🏝️</div>
-                <div>내 섬</div>
+                <div>내 보관함</div>
             </button>
             <button class="nav-btn" onclick="showScreen('flowchart', this)">
                 <div class="nav-icon">📊</div>
