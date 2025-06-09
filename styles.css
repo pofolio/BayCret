@@ -324,6 +324,13 @@ body::before {
     justify-content: space-between;
     font-size: 12px;
     color: #64CCC5;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.wave-card .stats .time {
+    opacity: 0.7;
+    font-style: italic;
 }
 
 .daily-quote {
@@ -343,8 +350,10 @@ body::before {
 }
 
 .emotion-selector {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
     margin-bottom: 20px;
     padding: 15px;
     background: rgba(255, 255, 255, 0.1);
@@ -352,11 +361,15 @@ body::before {
 }
 
 .emotion-emoji {
-    font-size: 30px;
+    font-size: 28px;
     cursor: pointer;
-    padding: 10px;
+    padding: 8px;
     border-radius: 50%;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
 }
 
 .emotion-emoji:hover,
@@ -491,22 +504,24 @@ body::before {
     border-top: 1px solid #64CCC5;
     display: flex;
     justify-content: space-around;
-    padding: 15px 0;
+    padding: 12px 0;
 }
 
 .nav-btn {
     background: none;
     border: none;
     color: #B8D4E3;
-    font-size: 12px;
+    font-size: 10px;
     cursor: pointer;
-    padding: 10px;
+    padding: 8px;
     border-radius: 10px;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
+    flex: 1;
+    max-width: 70px;
 }
 
 .nav-btn.active {
@@ -519,7 +534,7 @@ body::before {
 }
 
 .nav-icon {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 /* 공통 버튼 */
@@ -542,48 +557,244 @@ body::before {
     box-shadow: 0 5px 15px rgba(100, 204, 197, 0.4);
 }
 
-/* 플로우차트 스타일 */
-.flowchart {
-    display: none;
+/* 설정 화면 스타일 */
+.settings-menu {
     padding: 20px;
-    padding-bottom: 100px;
+    margin-bottom: 100px;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #64CCC5;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.setting-item:hover {
+    background: rgba(100, 204, 197, 0.2);
+    transform: translateY(-2px);
+}
+
+.setting-item.logout-item {
+    background: rgba(220, 53, 69, 0.1);
+    border-color: #dc3545;
+    color: #ff6b7a;
+}
+
+.setting-item.logout-item:hover {
+    background: rgba(220, 53, 69, 0.2);
+}
+
+.setting-icon {
+    font-size: 24px;
+    margin-right: 15px;
+    width: 40px;
     text-align: center;
 }
 
-.flowchart.active {
-    display: block;
+.setting-content {
+    flex: 1;
 }
 
-.flow-step {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid #64CCC5;
-    border-radius: 15px;
-    padding: 20px;
-    margin: 20px 0;
+.setting-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.setting-desc {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.setting-arrow {
+    font-size: 16px;
+    color: #64CCC5;
+}
+
+.setting-toggle {
     position: relative;
 }
 
-.flow-step::after {
-    content: '↓';
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #64CCC5;
-    font-size: 20px;
-}
-
-.flow-step:last-child::after {
+.setting-toggle input[type="checkbox"] {
     display: none;
 }
 
-.step-title {
+.toggle-slider {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.setting-toggle input:checked + .toggle-slider {
+    background: #64CCC5;
+}
+
+.setting-toggle input:checked + .toggle-slider::before {
+    transform: translateX(26px);
+}
+
+/* 로그인 화면 스타일 */
+.login-form {
+    padding: 20px;
+    margin-bottom: 100px;
+}
+
+.login-intro {
+    text-align: center;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.login-intro p {
+    margin-bottom: 15px;
     color: #64CCC5;
-    font-weight: bold;
+}
+
+.login-intro ul {
+    text-align: left;
+    color: #B8D4E3;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.login-intro li {
+    margin-bottom: 8px;
+    list-style-type: none;
+    position: relative;
+    padding-left: 20px;
+}
+
+.login-intro li::before {
+    content: '🌊';
+    position: absolute;
+    left: 0;
+}
+
+.login-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    border: 2px solid #64CCC5;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: rgba(100, 204, 197, 0.2);
+    transform: translateY(-2px);
+}
+
+.login-btn.google {
+    border-color: #4285f4;
+}
+
+.login-btn.apple {
+    border-color: #000;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.login-btn.email {
+    border-color: #64CCC5;
+}
+
+.login-icon {
+    font-size: 20px;
+}
+
+.login-footer {
+    text-align: center;
+    font-size: 14px;
+}
+
+.login-footer p {
     margin-bottom: 10px;
 }
 
-.step-desc {
-    font-size: 14px;
-    opacity: 0.8;
-} 
+.login-footer a {
+    color: #64CCC5;
+    text-decoration: none;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+.guest-mode {
+    opacity: 0.7;
+}
+
+/* 다크모드 스타일 */
+body.dark-mode {
+    background: linear-gradient(135deg, #0f1419 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+body.dark-mode::before {
+    opacity: 0.3;
+}
+
+body.dark-mode .container {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .header {
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom-color: #444;
+}
+
+body.dark-mode .wave-card {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: #444;
+}
+
+body.dark-mode .emotion-radar {
+    background: rgba(0, 0, 0, 0.2);
+    border-color: #444;
+}
+
+body.dark-mode .setting-item {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: #444;
+}
+
+body.dark-mode .bottom-nav {
+    background: rgba(0, 0, 0, 0.8);
+    border-top-color: #444;
+}
+
+ 

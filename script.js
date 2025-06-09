@@ -1,49 +1,72 @@
 // 목데이터
 const mockData = {
-    // 감정 레이더 데이터
+    // 감정 레이더 데이터 - 서정적 감정들로 확장
     emotionRadar: [
-        { emotion: '😢 슬픔', percentage: 40 },
-        { emotion: '🤗 위로', percentage: 25 },
-        { emotion: '💙 공감', percentage: 20 },
-        { emotion: '😊 기쁨', percentage: 10 },
-        { emotion: '😠 분노', percentage: 5 }
+        { emotion: '😔 우울함', percentage: 35 },
+        { emotion: '🥺 그리움', percentage: 28 },
+        { emotion: '😊 기쁨', percentage: 15 },
+        { emotion: '😌 평온함', percentage: 12 },
+        { emotion: '🥰 감사함', percentage: 10 }
     ],
 
-    // 오늘의 명언
+    // 오늘의 명언 - 대폭 확장
     dailyQuotes: [
         "지금의 감정을 숨기지 않아도 돼요",
         "당신의 마음이 소중합니다",
         "혼자가 아니에요, 함께 있어요",
         "오늘도 충분히 잘하고 있어요",
-        "모든 감정은 의미가 있어요"
+        "모든 감정은 의미가 있어요",
+        "잠시 쉬어가도 괜찮아요",
+        "당신은 사랑받을 자격이 있어요",
+        "오늘 하루만 견뎌내면 돼요",
+        "작은 것에도 감사할 줄 아는 마음",
+        "누구나 힘든 시간이 있어요",
+        "당신의 속도로 천천히 가도 돼요",
+        "완벽하지 않아도 충분해요",
+        "내일은 새로운 하루예요",
+        "당신만의 아름다움이 있어요",
+        "혼자만의 시간도 소중해요",
+        "마음이 아플 때는 울어도 돼요",
+        "당신의 이야기를 들어줄 사람이 있어요",
+        "작은 변화도 큰 용기예요",
+        "지나간 일은 지나간 일이에요",
+        "당신이기에 특별한 거예요",
+        "오늘도 여기 있어 줘서 고마워요",
+        "마음이 따뜻해지는 순간들이 있을 거예요",
+        "당신의 감정은 모두 소중해요",
+        "함께 이겨낼 수 있어요",
+        "조금씩 나아지고 있어요"
     ],
 
-    // 인기 편지병들
-    popularBottles: [
+    // 최신 편지병들 (기존 인기 편지병)
+    latestBottles: [
         {
             title: "오늘 하루도 고생했어요",
             preview: "혼자서도 잘 견뎌내고 있는 당신이 대단해요. 내일은 분명 더 나은 하루가...",
             likes: 124,
-            comments: 23
+            comments: 23,
+            time: "10분 전"
         },
         {
             title: "새벽 3시의 생각들",
             preview: "왜 이 시간에는 모든 게 더 복잡해 보이는 걸까요? 누군가도 이런 밤을...",
             likes: 89,
-            comments: 17
+            comments: 17,
+            time: "1시간 전"
         },
         {
             title: "소소한 행복을 찾았어요",
             preview: "오늘 길에서 본 고양이가 저를 보고 야옹 하더라고요. 그것만으로도...",
             likes: 156,
-            comments: 41
+            comments: 41,
+            time: "2시간 전"
         }
     ],
 
-    // 탐색 화면 랜덤 카드 데이터
+    // 탐색 화면 랜덤 카드 데이터 - 서정적 감정으로 업데이트
     randomCards: [
         {
-            emotion: '😢 슬픔',
+            emotion: '😔 우울함',
             content: '요즘 들어 혼자 있는 시간이 늘어나면서 문득문득 외로움이 밀려와요. 모든 게 잘 되고 있는 것 같은데도 뭔가 허전한 기분이 들어서... 이런 감정이 드는 게 정상인지 궁금해요. 누구나 이런 순간들이 있는 건가요?',
             tags: ['#외로움', '#일상', '#고민']
         },
@@ -53,14 +76,24 @@ const mockData = {
             tags: ['#일상', '#행복', '#동물']
         },
         {
-            emotion: '😌 평온',
+            emotion: '😌 평온함',
             content: '창가에 앉아 비 오는 소리를 들으니 마음이 차분해져요. 이런 고요한 시간이 필요했나 봐요.',
             tags: ['#비', '#평온', '#혼자시간']
         },
         {
-            emotion: '😢 그리움',
+            emotion: '🥺 그리움',
             content: '오래된 친구가 생각나네요. 연락하고 싶지만 괜히 부담스러워할까 봐 망설여져요.',
             tags: ['#친구', '#그리움', '#연락']
+        },
+        {
+            emotion: '🥰 감사함',
+            content: '오늘 낯선 사람이 문을 잡아줬어요. 작은 친절이지만 하루 종일 마음이 따뜻했어요.',
+            tags: ['#친절', '#감사', '#일상']
+        },
+        {
+            emotion: '🌅 희망',
+            content: '힘든 시간이었지만 조금씩 나아지고 있다는 걸 느껴요. 내일은 더 좋을 거예요.',
+            tags: ['#희망', '#성장', '#미래']
         }
     ],
 
@@ -88,28 +121,149 @@ const mockData = {
             likes: 34,
             time: "1일 전"
         }
-    ],
-
-    // 플로우차트 단계들
-    flowSteps: [
-        {
-            title: "1. 메인 화면 (감정의 파도)",
-            desc: "• 현재 바다의 분위기 (감정 통계)<br>• 인기 파도들 (인기 게시글)<br>• 오늘의 감정 한 줄 추천"
-        },
-        {
-            title: "2. 글쓰기 (파도 보내기)",
-            desc: "• 감정 이모지 선택<br>• 자유 텍스트 입력 (500자 이하)<br>• 태그 추가 및 익명 설정"
-        },
-        {
-            title: "3. 탐색 (파도 줍기)",
-            desc: "• 랜덤 게시글 탐색<br>• 공감, 댓글, 위로 기능<br>• 감정/태그별 필터링"
-        },
-        {
-            title: "4. 마이페이지 (나만의 섬)",
-            desc: "• 개인 감정 통계<br>• 작성한 글 아카이브<br>• 받은 공감 및 댓글 확인"
-        }
     ]
 };
+
+// 로그인 상태 관리
+let isLoggedIn = false;
+let currentUser = null;
+let isDarkMode = false;
+
+// 로그인 상태 확인 및 UI 업데이트
+function updateLoginStatus() {
+    const settingsIcon = document.getElementById('settings-icon');
+    const settingsText = document.getElementById('settings-text');
+    const settingsTitle = document.getElementById('settings-title');
+    const logoutSection = document.getElementById('logout-section');
+    
+    if (isLoggedIn) {
+        // 로그인 상태
+        settingsIcon.textContent = '⚙️';
+        settingsText.textContent = '설정';
+        settingsTitle.textContent = '⚙️ 설정';
+        if (logoutSection) logoutSection.style.display = 'flex';
+    } else {
+        // 로그아웃 상태
+        settingsIcon.textContent = '🔑';
+        settingsText.textContent = '로그인';
+        settingsTitle.textContent = '🔑 로그인';
+        if (logoutSection) logoutSection.style.display = 'none';
+    }
+}
+
+// 설정/로그인 버튼 클릭 핸들러
+function handleSettingsClick(button) {
+    // 모든 네비게이션 버튼 비활성화
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    
+    if (isLoggedIn) {
+        // 로그인 상태면 설정 화면
+        showScreen('settings-screen', button);
+    } else {
+        // 로그아웃 상태면 로그인 화면
+        showScreen('login-screen', button);
+    }
+}
+
+// 로그인 관련 함수들
+function loginWithGoogle() {
+    // 실제 구현에서는 Google OAuth를 사용
+    simulateLogin('Google 계정');
+}
+
+function loginWithApple() {
+    // 실제 구현에서는 Apple Sign In을 사용
+    simulateLogin('Apple ID');
+}
+
+function loginWithEmail() {
+    // 실제 구현에서는 이메일 로그인 폼을 띄움
+    simulateLogin('이메일 계정');
+}
+
+function simulateLogin(provider) {
+    // 시뮬레이션을 위한 임시 로그인
+    isLoggedIn = true;
+    currentUser = {
+        name: '바다 여행자',
+        email: 'user@baycret.com',
+        provider: provider,
+        joinDate: new Date()
+    };
+    
+    updateLoginStatus();
+    alert(`${provider}로 로그인되었습니다!`);
+    
+    // 메인 화면으로 이동
+    showScreen('main-screen', document.querySelector('.nav-btn[onclick*="main-screen"]'));
+    document.querySelector('.nav-btn[onclick*="main-screen"]').classList.add('active');
+    document.getElementById('settings-nav-btn').classList.remove('active');
+}
+
+function handleLogout() {
+    if (confirm('정말 로그아웃하시겠습니까?')) {
+        isLoggedIn = false;
+        currentUser = null;
+        updateLoginStatus();
+        alert('로그아웃되었습니다.');
+        
+        // 메인 화면으로 이동
+        showScreen('main-screen', document.querySelector('.nav-btn[onclick*="main-screen"]'));
+        document.querySelector('.nav-btn[onclick*="main-screen"]').classList.add('active');
+        document.getElementById('settings-nav-btn').classList.remove('active');
+    }
+}
+
+function continueAsGuest() {
+    alert('게스트 모드로 계속 이용하실 수 있습니다.');
+    showScreen('main-screen', document.querySelector('.nav-btn[onclick*="main-screen"]'));
+    document.querySelector('.nav-btn[onclick*="main-screen"]').classList.add('active');
+    document.getElementById('settings-nav-btn').classList.remove('active');
+}
+
+// 설정 관련 함수들
+function showUserProfile() {
+    if (!isLoggedIn) {
+        alert('로그인이 필요한 기능입니다.');
+        return;
+    }
+    alert('내 정보 설정 화면입니다.\n(추후 개발 예정)');
+}
+
+function toggleDarkMode() {
+    isDarkMode = !isDarkMode;
+    const toggle = document.getElementById('dark-mode-toggle');
+    toggle.checked = isDarkMode;
+    
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        alert('다크모드가 활성화되었습니다.');
+    } else {
+        document.body.classList.remove('dark-mode');
+        alert('라이트모드가 활성화되었습니다.');
+    }
+    
+    // 로컬 스토리지에 설정 저장
+    localStorage.setItem('darkMode', isDarkMode);
+}
+
+function showNotificationSettings() {
+    alert('알림 설정 화면입니다.\n(추후 개발 예정)');
+}
+
+function showPrivacySettings() {
+    alert('개인정보 보호 설정 화면입니다.\n(추후 개발 예정)');
+}
+
+function showAppInfo() {
+    alert('BayCret v1.0\n바다에 담은 비밀 편지\n\n개발: BayCret Team\n문의: support@baycret.com');
+}
+
+function showSignup() {
+    alert('회원가입 화면입니다.\n(추후 개발 예정)');
+}
 
 // 렌더링 함수들
 function renderEmotionRadar() {
@@ -138,18 +292,19 @@ function renderDailyQuote() {
     }
 }
 
-function renderPopularBottles() {
+function renderLatestBottles() {
     const container = document.querySelector('#main-screen .popular-waves');
     if (!container) return;
     
     const title = container.querySelector('h3');
-    const bottleCards = mockData.popularBottles.map(bottle => `
+    const bottleCards = mockData.latestBottles.map(bottle => `
         <div class="wave-card">
             <div class="title">${bottle.title}</div>
             <div class="preview">${bottle.preview}</div>
             <div class="stats">
                 <span>💙 ${bottle.likes}개의 공감</span>
                 <span>💬 ${bottle.comments}개의 댓글</span>
+                <span class="time">⏰ ${bottle.time}</span>
             </div>
         </div>
     `).join('');
@@ -209,30 +364,26 @@ function renderMyBottles() {
     container.innerHTML = title.outerHTML + bottleCards;
 }
 
-function renderFlowSteps() {
-    const container = document.querySelector('#flowchart');
-    if (!container) return;
-    
-    const header = container.querySelector('.header');
-    const flowSteps = mockData.flowSteps.map(step => `
-        <div class="flow-step">
-            <div class="step-title">${step.title}</div>
-            <div class="step-desc">${step.desc}</div>
-        </div>
-    `).join('');
-    
-    container.innerHTML = header.outerHTML + flowSteps;
-}
-
 // 초기 렌더링
 document.addEventListener('DOMContentLoaded', function() {
+    // 로컬 스토리지에서 다크모드 설정 로드
+    const savedDarkMode = localStorage.getItem('darkMode');
+    if (savedDarkMode === 'true') {
+        isDarkMode = true;
+        document.body.classList.add('dark-mode');
+        const toggle = document.getElementById('dark-mode-toggle');
+        if (toggle) toggle.checked = true;
+    }
+    
+    // 로그인 상태 업데이트
+    updateLoginStatus();
+    
     renderEmotionRadar();
     renderDailyQuote();
-    renderPopularBottles();
+    renderLatestBottles();
     renderRandomCard();
     renderUserStats();
     renderMyBottles();
-    renderFlowSteps();
     
     // 기존 이벤트 리스너들 재등록
     attachEventListeners();
