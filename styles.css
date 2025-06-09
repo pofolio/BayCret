@@ -73,9 +73,11 @@ body::before {
 }
 
 .bottle-logo {
-    font-size: 80px;
+    font-size: 60px;
     margin-bottom: 20px;
-    animation: bottleFloat 2s ease-in-out infinite;
+    animation: bottleFloat 3s ease-in-out infinite;
+    display: flex;
+    justify-content: center;
 }
 
 .splash-title {
@@ -123,8 +125,18 @@ body::before {
 }
 
 @keyframes bottleFloat {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(5deg); }
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-5px) rotate(1deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(0deg);
+    }
+    75% {
+        transform: translateY(-3px) rotate(-1deg);
+    }
 }
 
 @keyframes waveLoading {
@@ -795,6 +807,85 @@ body.dark-mode .setting-item {
 body.dark-mode .bottom-nav {
     background: rgba(0, 0, 0, 0.8);
     border-top-color: #444;
+}
+
+/* SVG 편지병 아이콘 스타일 */
+.message-bottle-icon {
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    transition: all 0.3s ease;
+}
+
+.message-bottle-icon:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(2px 2px 8px rgba(100, 204, 197, 0.5));
+}
+
+/* 네비게이션 SVG 아이콘 */
+.nav-icon svg {
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+    transition: all 0.3s ease;
+    color: #64CCC5;
+}
+
+.nav-btn:hover .nav-icon svg {
+    transform: scale(1.1);
+}
+
+.nav-btn.active .nav-icon svg {
+    filter: drop-shadow(1px 1px 4px rgba(100, 204, 197, 0.6));
+    color: #64CCC5;
+}
+
+/* 헤더 SVG 아이콘 */
+.header svg {
+    filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.4));
+    color: #64CCC5;
+}
+
+/* 스플래시 로고 SVG */
+.bottle-logo svg {
+    animation: bottleFloat 3s ease-in-out infinite;
+    color: #64CCC5;
+    filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.4));
+}
+
+/* 제목 내 SVG 아이콘 */
+h1 svg, h2 svg, h3 svg {
+    color: #64CCC5;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* 버튼 내 SVG 아이콘 */
+.primary-btn svg {
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.primary-btn:hover svg {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* 다크모드에서 SVG 색상 조정 */
+body.dark-mode .nav-icon svg {
+    color: #4A90A4;
+}
+
+body.dark-mode .nav-btn.active .nav-icon svg {
+    color: #64CCC5;
+}
+
+body.dark-mode .header svg,
+body.dark-mode .bottle-logo svg,
+body.dark-mode h1 svg,
+body.dark-mode h2 svg,
+body.dark-mode h3 svg {
+    color: #4A90A4;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+body.dark-mode .nav-icon svg,
+body.dark-mode .header svg {
+    filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.6));
 }
 
  
