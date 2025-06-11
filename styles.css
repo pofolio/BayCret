@@ -1111,4 +1111,34 @@ footer.bottom-nav {
     }
 }
 
+.month-switcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+.month-btn {
+    background: rgba(100,204,197,0.15);
+    border: none;
+    color: #64CCC5;
+    font-size: 20px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.month-btn:hover {
+    background: rgba(100,204,197,0.3);
+}
+.month-label {
+    font-size: 18px;
+    color: #B8D4E3;
+    font-weight: bold;
+    min-width: 80px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
  

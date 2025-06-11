@@ -114,14 +114,16 @@ const mockData = {
             preview: "커피 향이 유독 좋았던 오후...",
             likes: 12,
             time: "2시간 전",
-            views: 31
+            views: 31,
+            date: "2024-06"
         },
         {
             title: "혼자만의 시간",
             preview: "가끔은 혼자 있는 시간도 필요해...",
             likes: 34,
             time: "1일 전",
-            views: 55
+            views: 55,
+            date: "2024-05"
         }
     ]
 };
@@ -133,6 +135,109 @@ let isDarkMode = false;
 
 // 내 섬 게시판 정렬 상태
 let myBottleSort = { key: 'time', dir: 'desc' };
+
+// 월별 바다 색상 저장
+let seaColorsByMonth = {
+    '2024-06': '#64CCC5',
+    '2024-05': '#4A90A4',
+};
+let currentMonth = getCurrentMonth();
+function getCurrentMonth() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+}
+function getMonthLabel(month) {
+    return month.replace('-', '.');
+}
+function getPrevMonth(month) {
+    const [y, m] = month.split('-').map(Number);
+    let date = new Date(y, m - 2, 1);
+    return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+}
+function getNextMonth(month) {
+    const [y, m] = month.split('-').map(Number);
+    let date = new Date(y, m, 1);
+    return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+}
+
+function renderMonthSwitcher() {
+    const label = document.querySelector('.month-label');
+    if (label) label.textContent = getMonthLabel(currentMonth);
+}
+function setupMonthSwitcher() {
+    document.querySelector('.month-btn.prev').onclick = function() {
+        currentMonth = getPrevMonth(currentMonth);
+        renderMonthSwitcher();
+        renderSeaColor();
+        renderMyBottles();
+    };
+    document.querySelector('.month-btn.next').onclick = function() {
+        currentMonth = getNextMonth(currentMonth);
+        renderMonthSwitcher();
+        renderSeaColor();
+        renderMyBottles();
+    };
+}
+function renderSeaColor() {
+    const seaShape = document.getElementById('sea-shape');
+    const colorInput = document.getElementById('sea-color-picker');
+    if (!seaShape || !colorInput) return;
+    const color = seaColorsByMonth[currentMonth] || '#64CCC5';
+    seaShape.setAttribute('fill', color);
+    colorInput.value = color;
+}
+function setupSeaColorPicker() {
+    const seaShape = document.getElementById('sea-shape');
+    const colorInput = document.getElementById('sea-color-picker');
+    if (!seaShape || !colorInput) return;
+    // 월별 색상 적용
+    renderSeaColor();
+    colorInput.addEventListener('input', function() {
+        seaColorsByMonth[currentMonth] = this.value;
+        seaShape.setAttribute('fill', this.value);
+    });
+}
+function renderMyBottles() {
+    const tbody = document.getElementById('my-bottle-tbody');
+    if (!tbody) return;
+    let bottles = mockData.myBottles.filter(b => b.date === currentMonth);
+    // 정렬
+    bottles.sort((a, b) => {
+        let v1 = a[myBottleSort.key], v2 = b[myBottleSort.key];
+        if (myBottleSort.key === 'likes' || myBottleSort.key === 'views') {
+            v1 = Number(v1); v2 = Number(v2);
+        }
+        if (myBottleSort.key === 'time') {
+            return myBottleSort.dir === 'asc' ? v1.localeCompare(v2) : v2.localeCompare(v1);
+        }
+        if (v1 < v2) return myBottleSort.dir === 'asc' ? -1 : 1;
+        if (v1 > v2) return myBottleSort.dir === 'asc' ? 1 : -1;
+        return 0;
+    });
+    if (bottles.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="color:#B8D4E3; text-align:center; padding:30px 0;">이 달에는 작성한 편지병이 없습니다.</td></tr>';
+        return;
+    }
+    tbody.innerHTML = bottles.map(bottle => `
+        <tr class="my-bottle-row">
+            <td>${bottle.title}</td>
+            <td>${bottle.time}</td>
+            <td>${bottle.likes}</td>
+            <td>${bottle.views ?? 0}</td>
+        </tr>
+    `).join('');
+    // 정렬 아이콘 표시
+    ['title','time','likes','views'].forEach(key => {
+        const icon = document.getElementById('sort-' + key);
+        if (icon) {
+            if (myBottleSort.key === key) {
+                icon.textContent = myBottleSort.dir === 'asc' ? '▲' : '▼';
+            } else {
+                icon.textContent = '';
+            }
+        }
+    });
+}
 
 // 로그인 상태 확인 및 UI 업데이트
 function updateLoginStatus() {
@@ -333,9 +438,7 @@ function renderLatestBottles() {
 function renderRandomCard() {
     const cardElement = document.querySelector('.random-card');
     if (!cardElement) return;
-    
     const randomCard = mockData.randomCards[Math.floor(Math.random() * mockData.randomCards.length)];
-    
     cardElement.innerHTML = `
         <div class="emotion">${randomCard.emotion}</div>
         <div class="content">${randomCard.content}</div>
@@ -448,6 +551,9 @@ document.addEventListener('DOMContentLoaded', function() {
     attachEventListeners();
     setupSeaColorPicker();
     setupMyBottleSortEvents();
+    setupMonthSwitcher();
+    renderMonthSwitcher();
+    renderSeaColor();
 });
 
 // 이벤트 리스너들을 별도 함수로 분리
@@ -472,11 +578,15 @@ function attachEventListeners() {
 
     // 액션 버튼 클릭 효과
     document.querySelectorAll('.action-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            if (this.textContent.includes('다른 편지병')) {
+        btn.onclick = function() {
+            if (this.textContent.includes('다른 편지')) {
                 renderRandomCard();
+            } else if (this.textContent.includes('공감')) {
+                alert('공감이 전달되었습니다!');
+            } else if (this.textContent.includes('댓글')) {
+                alert('댓글 기능은 추후 지원됩니다.');
             }
-        });
+        };
     });
 
     // 글쓰기 textarea 자동 크기 조정
