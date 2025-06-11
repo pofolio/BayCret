@@ -444,20 +444,14 @@ function attachEventListeners() {
 
 function setupSeaColorPicker() {
     const seaShape = document.getElementById('sea-shape');
-    const colorBtns = document.querySelectorAll('.sea-color-btn');
-    if (!seaShape || colorBtns.length === 0) return;
+    const colorInput = document.getElementById('sea-color-picker');
+    if (!seaShape || !colorInput) return;
 
-    // 초기 선택
-    let selectedBtn = colorBtns[0];
-    selectedBtn.classList.add('selected');
-    seaShape.setAttribute('fill', selectedBtn.dataset.color);
+    // 초기 색상 적용
+    seaShape.setAttribute('fill', colorInput.value);
 
-    colorBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            colorBtns.forEach(b => b.classList.remove('selected'));
-            this.classList.add('selected');
-            seaShape.setAttribute('fill', this.dataset.color);
-        });
+    colorInput.addEventListener('input', function() {
+        seaShape.setAttribute('fill', this.value);
     });
 }
 

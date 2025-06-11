@@ -942,23 +942,27 @@ footer.bottom-nav {
     margin-bottom: 12px;
 }
 .sea-color-picker {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(70,130,180,0.15);
+    background: none;
     margin-bottom: 10px;
+    cursor: pointer;
+    padding: 0;
 }
-.sea-color-btn {
-    width: 32px;
-    height: 32px;
+.sea-color-picker::-webkit-color-swatch {
     border-radius: 50%;
     border: 2px solid #fff;
-    outline: none;
-    cursor: pointer;
-    transition: border 0.2s;
 }
-.sea-color-btn.selected {
-    border: 3px solid #FFD700;
-    box-shadow: 0 0 0 2px #FFD70055;
+.sea-color-picker::-moz-color-swatch {
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+.sea-color-picker::-ms-color-swatch {
+    border-radius: 50%;
+    border: 2px solid #fff;
 }
 
 .fab-login {
