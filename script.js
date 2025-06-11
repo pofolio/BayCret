@@ -195,10 +195,10 @@ function simulateLogin(provider) {
     updateLoginStatus();
     alert(`${provider}로 로그인되었습니다!`);
     
-    // 메인 화면으로 이동
-    showScreen('main-screen', document.querySelector('.nav-btn[onclick*="main-screen"]'));
-    document.querySelector('.nav-btn[onclick*="main-screen"]').classList.add('active');
-    document.getElementById('settings-nav-btn').classList.remove('active');
+    // 로그인 후 '편지 쓰기' 화면으로 이동
+    showScreen('write-screen', document.querySelector('.nav-btn[onclick*="write-screen"]'));
+    const writeBtn = document.querySelector('.nav-btn[onclick*="write-screen"]');
+    if (writeBtn) writeBtn.classList.add('active');
 }
 
 function handleLogout() {
@@ -208,18 +208,18 @@ function handleLogout() {
         updateLoginStatus();
         alert('로그아웃되었습니다.');
         
-        // 메인 화면으로 이동
-        showScreen('main-screen', document.querySelector('.nav-btn[onclick*="main-screen"]'));
-        document.querySelector('.nav-btn[onclick*="main-screen"]').classList.add('active');
-        document.getElementById('settings-nav-btn').classList.remove('active');
+        // 로그아웃 후 '편지 쓰기' 화면으로 이동
+        showScreen('write-screen', document.querySelector('.nav-btn[onclick*="write-screen"]'));
+        const writeBtn = document.querySelector('.nav-btn[onclick*="write-screen"]');
+        if (writeBtn) writeBtn.classList.add('active');
     }
 }
 
 function continueAsGuest() {
     alert('게스트 모드로 계속 이용하실 수 있습니다.');
-    showScreen('main-screen', document.querySelector('.nav-btn[onclick*="main-screen"]'));
-    document.querySelector('.nav-btn[onclick*="main-screen"]').classList.add('active');
-    document.getElementById('settings-nav-btn').classList.remove('active');
+    showScreen('write-screen', document.querySelector('.nav-btn[onclick*="write-screen"]'));
+    const writeBtn = document.querySelector('.nav-btn[onclick*="write-screen"]');
+    if (writeBtn) writeBtn.classList.add('active');
 }
 
 // 설정 관련 함수들
@@ -457,6 +457,13 @@ function setupSeaColorPicker() {
 
 // 화면 전환 함수
 function showScreen(screenId, button) {
+    // 내 섬 접근 시 로그인 체크
+    if (screenId === 'profile-screen' && !isLoggedIn) {
+        // 로그인 화면으로 이동
+        const loginBtn = document.querySelector('.nav-btn[onclick*="login-screen"]');
+        showScreen('login-screen', loginBtn || button);
+        return;
+    }
     // 모든 화면 숨기기
     const screens = document.querySelectorAll('.screen, .flowchart');
     screens.forEach(screen => screen.classList.remove('active'));

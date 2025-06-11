@@ -129,18 +129,22 @@
                     <input type="color" class="sea-color-picker" id="sea-color-picker" value="#64CCC5" title="바다 색상 선택">
                 </div>
 
-                <div class="popular-waves">
+                <!-- <div class="popular-waves">
                     <h3>🍶 내가 보낸 편지병들</h3>
-                    <!-- 동적으로 생성됨 -->
-                </div>
+                </div> -->
 
                 <!-- <div class="daily-quote"></div> -->
 
                 <div class="popular-waves">
                     <h3>📊 내 감정의 바다</h3>
-                    <div class="emotion-radar">
-                        <!-- 동적으로 생성됨 -->
-                    </div>
+                    <div class="emotion-radar"></div>
+                </div>
+
+                <!-- 로그아웃 버튼 (로그인 상태에서만 보임) -->
+                <div class="logout-section" id="logout-section" style="display:none; margin-top: 30px; text-align: center;">
+                    <button onclick="handleLogout()" class="primary-btn" style="width: 180px; margin: 0 auto; background: linear-gradient(45deg, #F67280, #C06C84);">
+                        육지로 가기
+                    </button>
                 </div>
             </div>
 
@@ -294,10 +298,6 @@
             <div>편지 줍기</div>
         </button>
     </footer>
-    <button class="fab-login" onclick="handleSettingsClick(this)" id="settings-fab-btn">
-        <div class="fab-icon" id="settings-fab-icon">🔑</div>
-        <div id="settings-fab-text">로그인</div>
-    </button>
     <script src="script.js"></script>
 </body>
 
