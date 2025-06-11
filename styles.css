@@ -14,13 +14,22 @@
     display: none; /* Chrome, Safari, Opera */
 }
 
+html, body {
+    height: 100vh;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background: url('image1.png') center center/cover no-repeat,
                 linear-gradient(135deg, #1B263B 0%, #0F3460 100%);
     color: white;
-    min-height: 100vh;
+    width: 100vw;
+    height: 100vh;
     position: relative;
+    overflow: hidden;
 }
 
 body::before {
@@ -163,6 +172,7 @@ body::before {
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
     min-height: 100vh;
+    max-height: 100vh;
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
@@ -170,18 +180,18 @@ body::before {
 
 /* 배경 파도 애니메이션 */
 .wave-bg {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100px;
     background: linear-gradient(45deg, #64CCC5, #4A90A4);
     opacity: 0.1;
     animation: wave 3s ease-in-out infinite;
+    z-index: 0;
 }
 
 @keyframes wave {
-
     0%,
     100% {
         transform: translateX(-50px) scaleY(1);
@@ -507,16 +517,17 @@ body::before {
 .bottom-nav {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 400px;
+    left: 0;
+    width: 100vw;
+    max-width: none;
     background: rgba(27, 38, 59, 0.9);
     backdrop-filter: blur(10px);
     border-top: 1px solid #64CCC5;
     display: flex;
     justify-content: space-around;
     padding: 12px 0;
+    z-index: 100;
+    transform: none;
 }
 
 .nav-btn {
@@ -886,6 +897,31 @@ body.dark-mode h3 svg {
 body.dark-mode .nav-icon svg,
 body.dark-mode .header svg {
     filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.6));
+}
+
+.main-body {
+    width: 100vw;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 80px;
+}
+
+footer.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    max-width: none;
+    background: rgba(27, 38, 59, 0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #64CCC5;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    z-index: 100;
+    transform: none;
 }
 
  

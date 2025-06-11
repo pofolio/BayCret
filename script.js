@@ -269,19 +269,29 @@ function showSignup() {
 function renderEmotionRadar() {
     const container = document.querySelector('.emotion-radar');
     if (!container) return;
-    
     const title = container.querySelector('h3');
-    const emotionItems = mockData.emotionRadar.map(item => `
-        <div class="emotion-item">
-            <span>${item.emotion}</span>
-            <div class="emotion-bar">
-                <div class="emotion-fill" style="width: ${item.percentage}%;"></div>
-            </div>
-            <span>${item.percentage}%</span>
+    if (!title) return;
+    // 감정별 파스텔톤 색상 매핑
+    const pastelColors = [
+        '#A7D8F7', '#F7CAC9', '#FFF6B7', '#B5EAD7', '#FFDAC1',
+        '#E2F0CB', '#C7CEEA', '#FFB7B2', '#B5EAD7', '#C7CEEA'
+    ];
+    // 감정별 SVG 물방울/파도 스타일로 표시
+    const emotionSVGs = mockData.emotionRadar.map((item, idx) => `
+        <div style="display: inline-block; margin: 0 10px 18px 10px; text-align: center;">
+            <svg width="54" height="54" viewBox="0 0 54 54">
+                <ellipse cx="27" cy="32" rx="22" ry="16" fill="${pastelColors[idx % pastelColors.length]}" opacity="0.7"/>
+                <ellipse cx="27" cy="32" rx="22" ry="16" fill="white" opacity="0.13"/>
+                <text x="50%" y="54%" text-anchor="middle" alignment-baseline="middle" font-size="22" font-family="Apple Color Emoji,Segoe UI Emoji,NotoColorEmoji,sans-serif">${item.emotion.split(' ')[0]}</text>
+            </svg>
+            <div style="font-size: 13px; color: #4A90A4; margin-top: 2px; font-weight: 500;">${item.emotion.split(' ')[1]}</div>
+            <div style="font-size: 15px; color: #4A90A4; font-weight: bold; margin-top: 2px;">${item.percentage}%</div>
         </div>
     `).join('');
     
-    container.innerHTML = title.outerHTML + emotionItems;
+    container.innerHTML = title.outerHTML +
+        `<div style="display: flex; justify-content: center; flex-wrap: wrap; align-items: end; gap: 0 8px; margin-top: 10px;">${emotionSVGs}</div>` +
+        `<div style="margin-top: 10px; color: #B8D4E3; font-size: 13px;">오늘의 바다 분위기를 이모지로 표현했어요</div>`;
 }
 
 function renderDailyQuote() {
@@ -435,12 +445,14 @@ function showScreen(screenId, button) {
     screens.forEach(screen => screen.classList.remove('active'));
 
     // 선택된 화면 보이기
-    document.getElementById(screenId).classList.add('active');
+    const targetScreen = document.getElementById(screenId);
+    if (!targetScreen) return;
+    targetScreen.classList.add('active');
 
     // 네비게이션 버튼 활성화 상태 변경
     const navButtons = document.querySelectorAll('.nav-btn');
     navButtons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
+    if (button) button.classList.add('active');
 }
 
  
