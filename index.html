@@ -129,22 +129,25 @@
                     <input type="color" class="sea-color-picker" id="sea-color-picker" value="#64CCC5" title="바다 색상 선택">
                 </div>
 
-                <!-- <div class="popular-waves">
-                    <h3>🍶 내가 보낸 편지병들</h3>
-                </div> -->
-
-                <!-- <div class="daily-quote"></div> -->
-
                 <div class="popular-waves">
-                    <h3>📊 내 감정의 바다</h3>
-                    <div class="emotion-radar"></div>
+                    <h3>🍶 내가 보낸 편지병들</h3>
+                    <!-- 동적으로 생성됨 -->
                 </div>
 
-                <!-- 로그아웃 버튼 (로그인 상태에서만 보임) -->
-                <div class="logout-section" id="logout-section" style="display:none; margin-top: 30px; text-align: center;">
-                    <button onclick="handleLogout()" class="primary-btn" style="width: 180px; margin: 0 auto; background: linear-gradient(45deg, #F67280, #C06C84);">
-                        육지로 가기
-                    </button>
+                <div class="my-bottle-board">
+                    <table class="bottle-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="title">제목 <span class="sort-icon" id="sort-title"></span></th>
+                                <th data-sort="time">날짜 <span class="sort-icon" id="sort-time"></span></th>
+                                <th data-sort="likes">공감 <span class="sort-icon" id="sort-likes"></span></th>
+                                <th data-sort="views">조회수 <span class="sort-icon" id="sort-views"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="my-bottle-tbody">
+                            <!-- 동적으로 렌더링 -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

@@ -113,13 +113,15 @@ const mockData = {
             title: "오늘의 작은 행복",
             preview: "커피 향이 유독 좋았던 오후...",
             likes: 12,
-            time: "2시간 전"
+            time: "2시간 전",
+            views: 31
         },
         {
             title: "혼자만의 시간",
             preview: "가끔은 혼자 있는 시간도 필요해...",
             likes: 34,
-            time: "1일 전"
+            time: "1일 전",
+            views: 55
         }
     ]
 };
@@ -128,6 +130,9 @@ const mockData = {
 let isLoggedIn = false;
 let currentUser = null;
 let isDarkMode = false;
+
+// 내 섬 게시판 정렬 상태
+let myBottleSort = { key: 'time', dir: 'desc' };
 
 // 로그인 상태 확인 및 UI 업데이트
 function updateLoginStatus() {
@@ -359,22 +364,63 @@ function renderUserStats() {
 }
 
 function renderMyBottles() {
-    const container = document.querySelector('#profile-screen .popular-waves:last-child');
-    if (!container) return;
-    
-    const title = container.querySelector('h3');
-    const bottleCards = mockData.myBottles.map(bottle => `
-        <div class="wave-card">
-            <div class="title">${bottle.title}</div>
-            <div class="preview">${bottle.preview}</div>
-            <div class="stats">
-                <span>💙 ${bottle.likes}개의 공감</span>
-                <span>${bottle.time}</span>
-            </div>
-        </div>
+    const tbody = document.getElementById('my-bottle-tbody');
+    if (!tbody) return;
+    let bottles = [...mockData.myBottles];
+    // 정렬
+    bottles.sort((a, b) => {
+        let v1 = a[myBottleSort.key], v2 = b[myBottleSort.key];
+        if (myBottleSort.key === 'likes' || myBottleSort.key === 'views') {
+            v1 = Number(v1); v2 = Number(v2);
+        }
+        if (myBottleSort.key === 'time') {
+            // 간단한 시간 정렬(최근/오래된 순)
+            // "2시간 전" "1일 전" 등은 문자열 비교로 충분히 동작(데모)
+            return myBottleSort.dir === 'asc' ? v1.localeCompare(v2) : v2.localeCompare(v1);
+        }
+        if (v1 < v2) return myBottleSort.dir === 'asc' ? -1 : 1;
+        if (v1 > v2) return myBottleSort.dir === 'asc' ? 1 : -1;
+        return 0;
+    });
+    if (bottles.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="color:#B8D4E3; text-align:center; padding:30px 0;">아직 작성한 편지병이 없습니다.</td></tr>';
+        return;
+    }
+    tbody.innerHTML = bottles.map(bottle => `
+        <tr class="my-bottle-row">
+            <td>${bottle.title}</td>
+            <td>${bottle.time}</td>
+            <td>${bottle.likes}</td>
+            <td>${bottle.views ?? 0}</td>
+        </tr>
     `).join('');
-    
-    container.innerHTML = title.outerHTML + bottleCards;
+    // 정렬 아이콘 표시
+    ['title','time','likes','views'].forEach(key => {
+        const icon = document.getElementById('sort-' + key);
+        if (icon) {
+            if (myBottleSort.key === key) {
+                icon.textContent = myBottleSort.dir === 'asc' ? '▲' : '▼';
+            } else {
+                icon.textContent = '';
+            }
+        }
+    });
+}
+
+// 정렬 헤더 클릭 이벤트 등록
+function setupMyBottleSortEvents() {
+    document.querySelectorAll('.bottle-table th[data-sort]').forEach(th => {
+        th.onclick = function() {
+            const key = th.getAttribute('data-sort');
+            if (myBottleSort.key === key) {
+                myBottleSort.dir = myBottleSort.dir === 'asc' ? 'desc' : 'asc';
+            } else {
+                myBottleSort.key = key;
+                myBottleSort.dir = 'desc';
+            }
+            renderMyBottles();
+        };
+    });
 }
 
 // 초기 렌더링
@@ -401,6 +447,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 기존 이벤트 리스너들 재등록
     attachEventListeners();
     setupSeaColorPicker();
+    setupMyBottleSortEvents();
 });
 
 // 이벤트 리스너들을 별도 함수로 분리
