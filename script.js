@@ -131,22 +131,21 @@ let isDarkMode = false;
 
 // 로그인 상태 확인 및 UI 업데이트
 function updateLoginStatus() {
-    const settingsIcon = document.getElementById('settings-icon');
-    const settingsText = document.getElementById('settings-text');
+    // 플로팅 버튼용
+    const settingsFabIcon = document.getElementById('settings-fab-icon');
+    const settingsFabText = document.getElementById('settings-fab-text');
     const settingsTitle = document.getElementById('settings-title');
     const logoutSection = document.getElementById('logout-section');
     
     if (isLoggedIn) {
-        // 로그인 상태
-        settingsIcon.textContent = '⚙️';
-        settingsText.textContent = '설정';
-        settingsTitle.textContent = '⚙️ 설정';
+        if (settingsFabIcon) settingsFabIcon.textContent = '⚙️';
+        if (settingsFabText) settingsFabText.textContent = '설정';
+        if (settingsTitle) settingsTitle.textContent = '⚙️ 설정';
         if (logoutSection) logoutSection.style.display = 'flex';
     } else {
-        // 로그아웃 상태
-        settingsIcon.textContent = '🔑';
-        settingsText.textContent = '로그인';
-        settingsTitle.textContent = '🔑 로그인';
+        if (settingsFabIcon) settingsFabIcon.textContent = '🔑';
+        if (settingsFabText) settingsFabText.textContent = '로그인';
+        if (settingsTitle) settingsTitle.textContent = '🔑 로그인';
         if (logoutSection) logoutSection.style.display = 'none';
     }
 }
@@ -303,23 +302,27 @@ function renderDailyQuote() {
 }
 
 function renderLatestBottles() {
-    const container = document.querySelector('#main-screen .popular-waves');
-    if (!container) return;
-    
-    const title = container.querySelector('h3');
-    const bottleCards = mockData.latestBottles.map(bottle => `
-        <div class="wave-card">
-            <div class="title">${bottle.title}</div>
-            <div class="preview">${bottle.preview}</div>
-            <div class="stats">
-                <span>💙 ${bottle.likes}개의 공감</span>
-                <span>💬 ${bottle.comments}개의 댓글</span>
-                <span class="time">⏰ ${bottle.time}</span>
+    // main-screen과 explore-screen 모두 지원
+    const containers = [
+        document.querySelector('#main-screen .popular-waves'),
+        document.querySelector('#explore-screen .popular-waves')
+    ].filter(Boolean);
+    containers.forEach(container => {
+        if (!container) return;
+        const title = container.querySelector('h3');
+        const bottleCards = mockData.latestBottles.map(bottle => `
+            <div class="wave-card">
+                <div class="title">${bottle.title}</div>
+                <div class="preview">${bottle.preview}</div>
+                <div class="stats">
+                    <span>💙 ${bottle.likes}개의 공감</span>
+                    <span>💬 ${bottle.comments}개의 댓글</span>
+                    <span class="time">⏰ ${bottle.time}</span>
+                </div>
             </div>
-        </div>
-    `).join('');
-    
-    container.innerHTML = title.outerHTML + bottleCards;
+        `).join('');
+        container.innerHTML = title.outerHTML + bottleCards;
+    });
 }
 
 function renderRandomCard() {
@@ -397,6 +400,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 기존 이벤트 리스너들 재등록
     attachEventListeners();
+    setupSeaColorPicker();
 });
 
 // 이벤트 리스너들을 별도 함수로 분리
@@ -436,6 +440,25 @@ function attachEventListeners() {
             this.style.height = this.scrollHeight + 'px';
         });
     }
+}
+
+function setupSeaColorPicker() {
+    const seaShape = document.getElementById('sea-shape');
+    const colorBtns = document.querySelectorAll('.sea-color-btn');
+    if (!seaShape || colorBtns.length === 0) return;
+
+    // 초기 선택
+    let selectedBtn = colorBtns[0];
+    selectedBtn.classList.add('selected');
+    seaShape.setAttribute('fill', selectedBtn.dataset.color);
+
+    colorBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            colorBtns.forEach(b => b.classList.remove('selected'));
+            this.classList.add('selected');
+            seaShape.setAttribute('fill', this.dataset.color);
+        });
+    });
 }
 
 // 화면 전환 함수

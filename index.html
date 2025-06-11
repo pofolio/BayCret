@@ -94,15 +94,19 @@
                     </h2>
                     <div class="subtitle">바다에서 떠내려온 편지들을 읽어보세요</div>
                 </div>
-
-                <div class="random-card">
+                <!-- <div class="daily-quote"></div> -->
+                <div class="popular-waves">
+                    <h3>
+                        <svg width="29" height="29" viewBox="0 0 1024 1024" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                            <use href="#message-bottle"/>
+                        </svg>
+                        최신 편지병들
+                    </h3>
                     <!-- 동적으로 생성됨 -->
                 </div>
-
-                <div class="action-buttons">
-                    <button class="action-btn">💙 공감하기</button>
-                    <button class="action-btn">💬 위로하기</button>
-                    <button class="action-btn">🔄 다른 편지병</button>
+                <div class="emotion-radar">
+                    <h3>🌊 현재 바다의 분위기</h3>
+                    <!-- 동적으로 생성됨 -->
                 </div>
             </div>
 
@@ -111,6 +115,24 @@
                 <div class="header">
                     <h2>🏝️ 나만의 섬</h2>
                     <div class="subtitle">당신이 보낸 편지병들의 기록</div>
+                </div>
+
+                <!-- 내 섬 비주얼 & 바다 색상 선택 -->
+                <div class="island-visual-wrapper">
+                    <div class="island-visual">
+                        <svg id="island-svg" viewBox="0 0 200 200" width="100%" height="100%">
+                            <ellipse id="sea-shape" cx="100" cy="170" rx="90" ry="30" fill="#64CCC5"/>
+                            <circle cx="100" cy="110" r="35" fill="#F9E79F" />
+                            <ellipse cx="100" cy="140" rx="25" ry="8" fill="#B7E4C7" />
+                        </svg>
+                    </div>
+                    <div class="sea-color-picker">
+                        <button class="sea-color-btn" data-color="#64CCC5" style="background:#64CCC5"></button>
+                        <button class="sea-color-btn" data-color="#4A90A4" style="background:#4A90A4"></button>
+                        <button class="sea-color-btn" data-color="#3A86FF" style="background:#3A86FF"></button>
+                        <button class="sea-color-btn" data-color="#00B4D8" style="background:#00B4D8"></button>
+                        <button class="sea-color-btn" data-color="#4361EE" style="background:#4361EE"></button>
+                    </div>
                 </div>
 
                 <div class="popular-waves">
@@ -248,9 +270,9 @@
                     </h1>
                     <div class="subtitle">바다에 담은 비밀 편지들</div>
                 </div>
-                <!-- <div class="emotion-radar">
+                <div class="emotion-radar">
                     <h3>🌊 현재 바다의 분위기</h3>
-                </div> -->
+                </div>
                 <!-- <div class="daily-quote"></div> -->
                 <div class="popular-waves">
                     <h3>
@@ -269,27 +291,19 @@
             <div class="nav-icon">✉️</div>
             <div>편지 쓰기</div>
         </button>
-        <button class="nav-btn" onclick="showScreen('explore-screen', this)">
-            <div class="nav-icon">📬</div>
-            <div>편지 줍기</div>
-        </button>
-        <button class="nav-btn" onclick="showScreen('main-screen', this)">
-            <div class="nav-icon">
-                <svg width="24" height="24" viewBox="0 0 1024 1024">
-                    <use href="#message-bottle"/>
-                </svg>
-            </div>
-            <div>홈</div>
-        </button>
         <button class="nav-btn" onclick="showScreen('profile-screen', this)">
             <div class="nav-icon">🏝️</div>
             <div>내 섬</div>
         </button>
-        <button class="nav-btn" onclick="handleSettingsClick(this)" id="settings-nav-btn">
-            <div class="nav-icon" id="settings-icon">🔑</div>
-            <div id="settings-text">로그인</div>
+        <button class="nav-btn" onclick="showScreen('explore-screen', this)">
+            <div class="nav-icon">📬</div>
+            <div>편지 줍기</div>
         </button>
     </footer>
+    <button class="fab-login" onclick="handleSettingsClick(this)" id="settings-fab-btn">
+        <div class="fab-icon" id="settings-fab-icon">🔑</div>
+        <div id="settings-fab-text">로그인</div>
+    </button>
     <script src="script.js"></script>
 </body>
 
